@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Donor Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h2 class="logo-title">
+                Food Donation Platform
+            </h2>
+
+            <p class="logo-subtitle">
+                For a Better Tomorrow
+            </p>
+
+        </div>
+
+        <div class="header-right">
+
+            <h3>
+                Welcome Back,
+                <span th:text="${loggedInUser.name}">
+                    Donor
+                </span>
+                👋
+            </h3>
+
+            <a href="/logout">
+
+                <button class="header-logout">
+                    Logout
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- HERO SECTION -->
+
+    <div class="hero-banner">
+
+        <div class="hero-left">
+
+            <h1>
+                Help Reduce Food Waste
+                and Feed People In Need
+            </h1>
+
+            <p>
+                Your small act of kindness can
+                make a big difference.
+            </p>
+
+            <a href="/add-donation">
+
+                <button class="add-btn">
+                    + Add New Donation
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-box">
+
+            <h4>Total Donations</h4>
+
+            <h2 th:text="${totalDonations}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>Accepted</h4>
+
+            <h2 th:text="${acceptedDonations}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>Collected</h4>
+
+            <h2 th:text="${collectedDonations}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>Feedbacks</h4>
+
+            <h2 th:text="${feedbackCount}">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- MY DONATIONS -->
+
+    <div class="dashboard-card">
+
+        <h2 class="section-title">
+            My Donations
+        </h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Food Name</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Accepted By</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="donation : ${donations}">
+
+                <td th:text="${donation.id}"></td>
+
+                <td th:text="${donation.foodname}"></td>
+
+                <td th:text="${donation.quantity}"></td>
+
+                <td>
+
+                    <span th:if="${donation.status=='AVAILABLE'}"
+                          class="available">
+                        Available
+                    </span>
+
+                    <span th:if="${donation.status=='ACCEPTED'}"
+                          class="accepted">
+                        Accepted
+                    </span>
+
+                    <span th:if="${donation.status=='COLLECTED'}"
+                          class="collected">
+                        Collected
+                    </span>
+
+                </td>
+
+                <td th:text="${donation.acceptedBy != null ? donation.acceptedBy.name : 'Not Accepted'}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- LOWER GRID -->
+
+    <div class="bottom-grid">
+
+        <!-- DONATION PROGRESS -->
+
+        <div class="dashboard-card">
+
+            <h2 class="section-title">
+                Donation Progress
+            </h2>
+
+            <div th:each="donation : ${donations}"
+                 class="progress-box">
+
+                <h4 th:text="${donation.foodname}">
+                    Food Name
+                </h4>
+
+                <div class="progress-line">
+
+                    <span class="done">
+                        Available
+                    </span>
+
+                    →
+
+                    <span th:classappend="${donation.status=='ACCEPTED' || donation.status=='COLLECTED'} ? 'done'">
+                        Accepted
+                    </span>
+
+                    →
+
+                    <span th:classappend="${donation.status=='COLLECTED'} ? 'done'">
+                        Collected
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RECENT FEEDBACK -->
+
+        <div class="dashboard-card">
+
+            <h2 class="section-title">
+                Recent Feedback
+            </h2>
+
+            <div th:if="${feedbacks == null || feedbacks.isEmpty()}">
+
+                <p>
+                    No feedback received yet.
+                </p>
+
+            </div>
+
+            <div th:each="feedback : ${feedbacks}">
+
+                <div class="feedback-item">
+
+                    <h4 th:text="${feedback.donation.foodname}">
+                        Food Name
+                    </h4>
+
+                    <p>
+
+                        Rating:
+                        <strong th:text="${feedback.rating}">
+                            5
+                        </strong>/5
+
+                    </p>
+
+                    <p th:text="${feedback.comments}">
+                        Feedback Comment
+                    </p>
+
+                    <hr>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add Donation</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="donation-page">
+
+    <div class="donation-card">
+
+        <div class="donation-icon">
+            🍱
+        </div>
+
+        <h2>Add Food Donation</h2>
+
+        <p class="donation-subtitle">
+            Share your surplus food and help people in need.
+        </p>
+
+        <form action="/save-donation"
+              method="post">
+
+            <label>Food Name</label>
+
+            <input type="text"
+                   name="foodname"
+                   placeholder="Enter food name"
+                   required>
+
+            <label>Quantity</label>
+
+            <input type="text"
+                   name="quantity"
+                   placeholder="Example: 20 Packets"
+                   required>
+
+            <label>Food Type</label>
+
+            <select name="foodType"
+                    required>
+
+                <option value="">
+                    Select Food Type
+                </option>
+
+                <option value="Veg">
+                    Veg
+                </option>
+
+                <option value="Non-Veg">
+                    Non-Veg
+                </option>
+
+            </select>
+
+            <label>Expiry Time</label>
+
+            <input type="datetime-local"
+                   name="expiryTime"
+                   required>
+
+            <label>Pickup Location</label>
+
+            <input type="text"
+                   name="location"
+                   placeholder="Enter pickup location"
+                   required>
+
+            <button type="submit"
+                    class="submit-donation-btn">
+
+                Submit Donation
+
+            </button>
+
+        </form>
+
+        <a href="/donor-dashboard">
+
+            <button class="back-btn">
+
+                Back To Dashboard
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

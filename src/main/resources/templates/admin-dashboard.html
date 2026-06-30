@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="table-container">
+
+    <h2>Admin Dashboard</h2>
+
+    <table>
+
+        <tr>
+            <th>Statistic</th>
+            <th>Count</th>
+        </tr>
+
+        <tr>
+            <td>Total Users</td>
+            <td th:text="${totalUsers}"></td>
+        </tr>
+
+        <tr>
+            <td>Total Donors</td>
+            <td th:text="${totalDonors}"></td>
+        </tr>
+
+        <tr>
+            <td>Total NGOs</td>
+            <td th:text="${totalNgos}"></td>
+        </tr>
+
+        <tr>
+            <td>Total Donations</td>
+            <td th:text="${totalDonations}"></td>
+        </tr>
+
+        <tr>
+            <td>Accepted Donations</td>
+            <td th:text="${acceptedDonations}"></td>
+        </tr>
+
+        <tr>
+            <td>Collected Donations</td>
+            <td th:text="${collectedDonations}"></td>
+        </tr>
+
+    </table>
+
+    <br><br>
+
+    <a href="/logout">
+
+        <button type="button">
+            Logout
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>
+

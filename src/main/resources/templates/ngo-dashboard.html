@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>NGO Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h2 class="logo-title">
+                Food Donation
+            </h2>
+
+            <p class="logo-subtitle">
+                For a Better Tomorrow
+            </p>
+
+        </div>
+
+        <div class="header-right">
+
+            <div class="welcome-box">
+
+                <p>Welcome Back,</p>
+
+                <h3 th:text="${loggedInUser.name}">
+                    NGO Name
+                </h3>
+
+            </div>
+
+            <a href="/logout">
+                <button class="header-logout">
+                    Logout
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- HERO SECTION -->
+
+    <div class="hero-banner">
+
+        <div>
+
+            <h1>
+                Manage Food Donations Efficiently
+            </h1>
+
+            <p>
+                Accept food donations and deliver them to people in need.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+        <div class="stat-box">
+
+            <h4>Available</h4>
+
+            <h2 th:text="${availableCount}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>Accepted</h4>
+
+            <h2 th:text="${acceptedCount}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h4>Collected</h4>
+
+            <h2 th:text="${collectedCount}">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- AVAILABLE DONATIONS -->
+
+    <div class="dashboard-card">
+
+        <h2 class="section-title">
+            Available Donations
+        </h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Food Name</th>
+                <th>Quantity</th>
+                <th>Food Type</th>
+                <th>Location</th>
+                <th>Donor Name</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="donation : ${donations}"
+                th:if="${donation.status == 'AVAILABLE'}">
+
+                <td th:text="${donation.foodname}"></td>
+
+                <td th:text="${donation.quantity}"></td>
+
+                <td th:text="${donation.foodType}"></td>
+
+                <td th:text="${donation.location}"></td>
+
+                <td th:text="${donation.donor.name}"></td>
+
+                <td>
+                    Hidden Until Accepted
+                </td>
+
+                <td>
+
+                    <span class="available">
+                        Available
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <form th:action="@{/accept-donation/{id}(id=${donation.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="accept-btn">
+
+                            Accept
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- ACCEPTED DONATIONS -->
+
+    <div class="dashboard-card">
+
+        <h2 class="section-title">
+            Accepted Donations
+        </h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Food Name</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Donor Name</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="donation : ${donations}"
+                th:if="${donation.status == 'ACCEPTED'}">
+
+                <td th:text="${donation.foodname}"></td>
+
+                <td th:text="${donation.quantity}"></td>
+
+                <td th:text="${donation.location}"></td>
+
+                <td th:text="${donation.donor.name}"></td>
+
+                <td th:text="${donation.donor.phone}"></td>
+
+                <td>
+
+                    <span class="accepted">
+                        Accepted
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <form th:action="@{/collect-donation/{id}(id=${donation.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="collect-btn">
+
+                            Mark Collected
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- FEEDBACK -->
+
+    <div class="dashboard-card">
+
+        <h2 class="section-title">
+            Submit Feedback
+        </h2>
+
+        <form action="/save-feedback"
+              method="post">
+
+            <select name="donationId"
+                    required>
+
+                <option value="">
+                    Select Donation
+                </option>
+
+                <option th:each="donation : ${donations}"
+                        th:value="${donation.id}"
+                        th:text="${donation.foodname}">
+                </option>
+
+            </select>
+
+            <select name="rating"
+                    required>
+
+                <option value="">
+                    Select Rating
+                </option>
+
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+
+            </select>
+
+            <textarea name="comment"
+                      rows="4"
+                      placeholder="Write feedback..."
+                      required>
+            </textarea>
+
+            <button type="submit"
+                    class="submit-btn">
+
+                Submit Feedback
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+
+    <div class="dashboard-card">
+
+        <h2 class="section-title">
+            Recent Activity
+        </h2>
+
+        <ul class="activity-list">
+
+    <li>
+        ✔ Accepted Donations :
+        <strong th:text="${acceptedCount}"></strong>
+    </li>
+
+    <li>
+        ✔ Collected Donations :
+        <strong th:text="${collectedCount}"></strong>
+    </li>
+
+    <li>
+        ✔ Feedback Submitted :
+        <strong th:text="${feedbackCount}"></strong>
+    </li>
+
+</ul>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

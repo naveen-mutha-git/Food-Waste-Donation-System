@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <div class="login-logo">
+            💚
+        </div>
+
+        <h2>User Registration</h2>
+
+        <p class="login-subtitle">
+            Create your account to join the Food Waste Donation Platform
+        </p>
+
+        <form action="/register-user"
+              method="post">
+
+            <input type="text"
+                   name="name"
+                   placeholder="Enter Full Name"
+                   required>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter Email Address"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Create Password"
+                   required>
+
+            <input type="text"
+                   name="phone"
+                   placeholder="Enter Phone Number"
+                   required>
+
+            <textarea name="address"
+                      placeholder="Enter Address"
+                      rows="4"
+                      required></textarea>
+
+            <select name="role" required>
+
+                <option value="">
+                    Select Role
+                </option>
+
+                <option value="DONOR">
+                    Donor
+                </option>
+
+                <option value="NGO">
+                    NGO
+                </option>
+
+                <option value="ADMIN">
+                    Admin
+                </option>
+
+            </select>
+
+            <button type="submit"
+                    class="login-btn">
+                Register
+            </button>
+
+        </form>
+
+        <p class="register-link">
+
+            Already have an account?
+
+            <a href="/login">
+                Login Here
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
